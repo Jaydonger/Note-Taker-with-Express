@@ -76,6 +76,9 @@ const handleNoteSave = () => {
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
+  })
+  .catch((err) => {
+    console.log(err);
   });
 };
 

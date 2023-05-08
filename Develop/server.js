@@ -1,20 +1,18 @@
-const express = require('express');
-const apiRoutes = require('./routes/apiroutes');
-const router = require('./routes/route');
-const { clog } = require('./middleware/clog');
-// const api = require('./routes/index.js');
-
-const PORT = process.env.PORT || 3001;
-
+const express = require("express");
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
+// Initialize the app and create a port
 const app = express();
+const PORT = process.env.PORT || 3001;
+// Set up body parsing, static, and route middleware
+app.use(express.json());
 
-// Import custom middleware, "cLog"
-app.use(clog);
+app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static('public'));
-app.use('/', router);
-app.use('/api', apiRoutes);
+app.use(express.static("public"));
 
-app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT} 🚀`)
-);
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
+
+// Start the server on the port
+app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
